@@ -1,0 +1,26 @@
+{
+  "name": "code-face",
+  "version": "0.1.0",
+  "description": "Code Face - A simple code editor",
+  "main": "index.ts",
+  "scripts": {
+    "test": "mocha --require ts-node/register test/**/*.test.ts"
+  },
+  "author": "Gnaw Fortune",
+  "license": "MIT",
+  "dependencies": {
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "chai": "^4.2.0",
+    "eslint": "6",
+    "mocha": "^7.0.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  }
+}

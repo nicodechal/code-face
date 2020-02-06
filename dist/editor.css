@@ -1,0 +1,91 @@
+.lines-scroll-box * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.lines-scroll-box {
+  padding: 10px 10px 10px 0;
+  border: 1px solid #e6e6e6;
+  width: 700px;
+  height: 500px;
+  overflow: auto;
+  position: relative;
+}
+
+.cursor,
+.select-box .select {
+  height: 1.2rem;
+}
+
+.lines-box {
+  position: relative;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  line-height: 1.2rem;
+  font-size: 13px;
+  color: #222;
+  /* gutter */
+  margin-left: 50px;
+}
+
+.lines-box .lines,
+.lines-box .test-box {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.text-box {
+  /* height: 0; */
+  /* overflow: hidden; */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#textarea {
+  outline: none;
+  height: 1.2rem;
+  width: 1px;
+  border: none;
+}
+
+.cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  background-color: #000;
+}
+
+.select-box .select {
+  background-color: #cfe3fd;
+  position: absolute;
+  top: 0;
+  left: 0px;
+  right: 0;
+  width: 100px;
+  margin: 0;
+  z-index: -1;
+}
+
+.line .line-number {
+  /* gutter */
+  width: 50px;
+  float: left;
+  text-align: center;
+  color: #999;
+  /* gutter */
+  margin-left: -50px;
+}
+.line .line-content {
+  overflow: hidden;
+}
+
+
+.keyword {
+  color: rgb(16, 51, 246);
+}
+
+.type {
+  color: rgb(16, 51, 246);
+}
