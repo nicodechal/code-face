@@ -1,5 +1,5 @@
 import '../interface';
-import { eqLnCol, stringSplice, normalizeLnCol, sortBound, normalizeLnCols } from '../utils/utils';
+import { eqLnCol, stringSplice, sortBound } from '../utils/utils';
 
 
 export class Lines implements Content {
@@ -12,8 +12,8 @@ export class Lines implements Content {
 
   add(added: string, b: Bound): LnCol {
     // delete selected text.
-    const lnCol = eqLnCol(...b) ? b[0] : this.delete(b);
-    const [ln, col] = normalizeLnCol(this.content, lnCol);
+    const [ln, col] = eqLnCol(...b) ? b[0] : this.delete(b);
+    // const [ln, col] = normalizeLnCol(this.content, lnCol);
 
     // firstly add all words into one `line`, then split with `return`.
     const multiLines = stringSplice(this.content[ln - 1], col - 1, 0, added).split('\n'); 
@@ -30,7 +30,7 @@ export class Lines implements Content {
 
   delete(b: Bound): LnCol {
     // normalize start & end.
-    b = normalizeLnCols(this.content, b) as Bound;
+    // b = normalizeLnCols(this.content, b) as Bound;
     
     // reorder for start and end.
     const [[sln, scol], [eln, ecol]] = sortBound(b);
