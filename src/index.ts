@@ -1,10 +1,13 @@
-import { RenderEditor } from './display/render-editor';
+import { Render } from './display/render';
 import { scrollEl } from './display/dom';
+import { Editor } from './model/editor';
+import { deleteChar, moveUp, moveDown, moveLeft, moveRight } from './display/commands';
 
 const input: HTMLInputElement = document.querySelector('#textarea');
 
-const edt = new RenderEditor();
-edt.render();
+const editor = new Editor();
+const render = new Render();
+render.render(editor);
 
 /**
  * prev used to save the content in the textarea before current input.
@@ -23,10 +26,10 @@ input.oninput = (e: InputEvent): void => {
     
     // this means input has changed.
     if (prev.slice(same) != cv.slice(same)) {
-      const [l, r] = edt.getSelection();
-      edt.select([l[0], l[1] - (prev.length - same)], r);
-      edt.delete();
-      edt.add(v == '\t' ? '  ' : v);
+      const [l, r] = editor.getSelection();
+      editor.select([l[0], l[1] - (prev.length - same)], r);
+      editor.delete();
+      editor.add(v == '\t' ? '  ' : v);
     } 
 
     if (cv.length > 1000) {
@@ -34,43 +37,33 @@ input.oninput = (e: InputEvent): void => {
       prev = '';
     }
     prev = cv;
-    edt.render();
+    render.render(editor);
   }, 0);
 };
 
 
 const keymap = {
-  'ArrowUp': edt.moveUp.bind(edt),
-  'ArrowDown': edt.moveDown.bind(edt),
-  'ArrowLeft': edt.moveLeft.bind(edt),
-  'ArrowRight': edt.moveRight.bind(edt),
-  'Backspace': (): void => {
-    // only when delete part is not in textarea.
-    if (input.value == '') {
-      edt.back();
-      edt.render();
-    }
-  }
+  'ArrowUp': (): void => moveUp(editor),
+  'ArrowDown': (): void => moveDown(editor),
+  'ArrowLeft': (): void => moveLeft(editor),
+  'ArrowRight': (): void => moveRight(editor),
+  'Backspace': (): void => deleteChar(editor),
+  'Tab': (): void => { editor.add('  '); },
 };
 
 input.onkeydown = function (e: KeyboardEvent): void {
   // When IME input, just return. Opera is not considered now.
   if (e.keyCode == 229) return;
-  // For Tab insert.
-  if (e.key == 'Tab') {
-    e.preventDefault();
-    edt.add('  ');
-    edt.render();
-  }
   // This makes sure the code below is only used to handle keymap.
   if (!keymap.hasOwnProperty(e.key)) return;
 
   // for insert between words.
-  input.value = '';
+  (e.target as HTMLInputElement).value = '';
   prev = '';
 
   keymap[e.key]();
-  edt.renderCursor();
+  render.render(editor);
+  e.preventDefault();
 };
 
 scrollEl.onclick = function(): void {
