@@ -1,4 +1,4 @@
-import { SELECTOR } from '../global';
+import { SELECTOR } from '../global/constants';
 
 const linesEl: HTMLElement = document.querySelector(SELECTOR.LINES);
 const testEl: HTMLElement = document.querySelector(SELECTOR.TEST);

@@ -1,4 +1,4 @@
-import { DEFAULT_LINE_HEIGHT } from '../global';
+import { DEFAULT_LINE_HEIGHT } from '../global/constants';
 
 export function createEl(tagName: string, content: string = null, classes: string[] | string = []): HTMLElement {
   const node = document.createElement(tagName);
