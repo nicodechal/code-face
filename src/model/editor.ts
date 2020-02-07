@@ -78,6 +78,20 @@ export class Editor {
     return this.delete();
   }
 
+  selectH(delta: number): Bound {
+    const elc = this.getSelection()[1];
+    this.select(this.getSelection()[0]);
+    const slc = this.moveH(delta);
+    return this.select(slc, elc);
+  }
+
+  selectV(delta: number): Bound {
+    const elc = this.getSelection()[1];
+    this.select(this.getSelection()[0]);
+    const slc = this.moveV(delta);
+    return this.select(slc, elc);
+  }
+  
   getSelection(): Bound {
     return this.selection;
   }
