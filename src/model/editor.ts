@@ -70,7 +70,7 @@ export class Editor {
   }
 
   deleteH(delta: number): LnCol {
-    if (!eqLnCol(...this.getSelection())) this.delete();
+    if (!eqLnCol(...this.getSelection())) return this.delete();
     const lc = this.getSelection()[1];
     const nlc = this.moveH(delta);
     this.select(...sortBound([lc, nlc]));
