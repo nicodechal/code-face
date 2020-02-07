@@ -49,6 +49,16 @@ export function nextLnCol(c: string[], lc: LnCol): LnCol {
   return [ln, col];
 }
 
+export function generateKey(key: string, meta: boolean, ctrl: boolean, alt: boolean, shift: boolean): string {
+  const mapKey = [];
+  if (meta) mapKey.push('Meta');
+  if (ctrl) mapKey.push('Ctrl');
+  if (alt) mapKey.push('Alt');
+  if (shift) mapKey.push('Shift');
+  mapKey.push(key.length == 1 ? key.toUpperCase() : key);
+  return mapKey.join('+');
+}
+
 /**
  * Binary search, make sure the return index is a valid index.
  * Normally, this function will return the index who's value 

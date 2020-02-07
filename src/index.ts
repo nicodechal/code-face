@@ -2,6 +2,7 @@ import { Render } from './display/render';
 import { scrollEl } from './display/dom';
 import { Editor } from './model/editor';
 import { keyMap } from './display/commands';
+import { generateKey } from './utils/utils';
 
 const input: HTMLInputElement = document.querySelector('#textarea');
 
@@ -46,13 +47,12 @@ input.onkeydown = function (e: KeyboardEvent): void {
   // When IME input, just return. Opera is not considered now.
   if (e.keyCode == 229) return;
   // This makes sure the code below is only used to handle keymap.
-  if (!keyMap.hasOwnProperty(e.key)) return;
-
+  const key = generateKey(e.key, e.metaKey, e.ctrlKey, e.altKey, e.shiftKey);
+  if (!keyMap.hasOwnProperty(key)) return;
   // for insert between words.
   (e.target as HTMLInputElement).value = '';
   prev = '';
-
-  keyMap[e.key](editor);
+  keyMap[key](editor);
   render.render(editor);
   e.preventDefault();
 };

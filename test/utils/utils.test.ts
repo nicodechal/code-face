@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { stringSplice, binarySearch, normalizeLnCol, eqLnCol, cmpLnCol, sortBound, prevLnCol, nextLnCol } from '../../src/utils/utils';
+import { stringSplice, binarySearch, normalizeLnCol, eqLnCol, cmpLnCol, sortBound, prevLnCol, nextLnCol, generateKey } from '../../src/utils/utils';
 
 describe('test utils', () => {
   it('test stringSplice', () => {
@@ -65,6 +65,14 @@ describe('test utils', () => {
     expect(nextLnCol(['abc', 'defg', '', 'a'], [3, 2])).eql([4, 1]);
     // empty test.
   });
+
+  it('test generateKey', () => {
+    expect(generateKey('a', true, true, false, false)).equal('Meta+Ctrl+A');
+    expect(generateKey('b', true, false, true, false)).equal('Meta+Alt+B');
+    expect(generateKey('x', false, false, false, false)).equal('X');
+    expect(generateKey('x', true, true, true, true)).equal('Meta+Ctrl+Alt+Shift+X');
+    expect(generateKey('Meta', true, true, true, true)).equal('Meta+Ctrl+Alt+Shift+Meta');
+  })
 
   it('test binarySearch', () => {
     expect(binarySearch([1,3,4,5,7,8], 5)).equal(3);

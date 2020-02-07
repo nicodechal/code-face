@@ -22,4 +22,5 @@ export const keyMap = {
   'ArrowRight': (editor: Editor): void => moveRight(editor),
   'Backspace': (editor: Editor): void => deleteChar(editor),
   'Tab': (editor: Editor): void => { editor.add('  '); },
+  'Meta+A': (editor: Editor): void => selectAll(editor)
 };
