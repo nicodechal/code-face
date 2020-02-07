@@ -1,7 +1,7 @@
 import { Render } from './display/render';
 import { scrollEl } from './display/dom';
 import { Editor } from './model/editor';
-import { deleteChar, moveUp, moveDown, moveLeft, moveRight } from './display/commands';
+import { keyMap } from './display/commands';
 
 const input: HTMLInputElement = document.querySelector('#textarea');
 
@@ -42,26 +42,17 @@ input.oninput = (e: InputEvent): void => {
 };
 
 
-const keymap = {
-  'ArrowUp': (): void => moveUp(editor),
-  'ArrowDown': (): void => moveDown(editor),
-  'ArrowLeft': (): void => moveLeft(editor),
-  'ArrowRight': (): void => moveRight(editor),
-  'Backspace': (): void => deleteChar(editor),
-  'Tab': (): void => { editor.add('  '); },
-};
-
 input.onkeydown = function (e: KeyboardEvent): void {
   // When IME input, just return. Opera is not considered now.
   if (e.keyCode == 229) return;
   // This makes sure the code below is only used to handle keymap.
-  if (!keymap.hasOwnProperty(e.key)) return;
+  if (!keyMap.hasOwnProperty(e.key)) return;
 
   // for insert between words.
   (e.target as HTMLInputElement).value = '';
   prev = '';
 
-  keymap[e.key]();
+  keyMap[e.key](editor);
   render.render(editor);
   e.preventDefault();
 };
