@@ -4,6 +4,7 @@
   "description": "Code Face - A simple code editor",
   "main": "index.ts",
   "scripts": {
+    "start": "webpack-dev-server",
     "test": "mocha --require ts-node/register test/**/*.test.ts"
   },
   "author": "Gnaw Fortune",
