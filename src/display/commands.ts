@@ -32,4 +32,5 @@ export const keyMap = {
   'Shift+ArrowDown': (editor: Editor): void => selectDown(editor),
   'Shift+ArrowLeft': (editor: Editor): void => selectLeft(editor),
   'Shift+ArrowRight': (editor: Editor): void => selectRight(editor),
+  'Meta+V': (editor: Editor): void => { editorState.pasting = true; }
 };

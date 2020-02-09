@@ -3,6 +3,7 @@ import { scrollEl } from './display/dom';
 import { Editor } from './model/editor';
 import { keyMap } from './display/commands';
 import { generateKey } from './utils/utils';
+import { editorState } from './global/state';
 
 const input: HTMLInputElement = document.querySelector('#textarea');
 
@@ -54,7 +55,8 @@ input.onkeydown = function (e: KeyboardEvent): void {
   prev = '';
   keyMap[key](editor);
   render.render(editor);
-  e.preventDefault();
+  if (!editorState.pasting) e.preventDefault();
+  else editorState.pasting = false;
 };
 
 scrollEl.onclick = function(): void {
