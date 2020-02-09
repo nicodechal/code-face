@@ -79,16 +79,16 @@ export class Editor {
   }
 
   selectH(delta: number): Bound {
-    const elc = this.getSelection()[1];
-    this.select(this.getSelection()[0]);
-    const slc = this.moveH(delta);
+    const slc = this.getSelection()[0];
+    this.select(this.getSelection()[1]);
+    const elc = this.moveH(delta);
     return this.select(slc, elc);
   }
 
   selectV(delta: number): Bound {
-    const elc = this.getSelection()[1];
-    this.select(this.getSelection()[0]);
-    const slc = this.moveV(delta);
+    const slc = this.getSelection()[0];
+    this.select(this.getSelection()[1]);
+    const elc = this.moveV(delta);
     return this.select(slc, elc);
   }
   
