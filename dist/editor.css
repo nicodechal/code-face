@@ -89,3 +89,11 @@
 .type {
   color: rgb(16, 51, 246);
 }
+
+.comment {
+  color: rgb(51, 126, 247);
+}
+
+.string {
+  color: rgb(49, 120, 33);
+}

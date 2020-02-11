@@ -3,8 +3,10 @@ import { linesEl, cursorEl, scrollEl } from './dom';
 import { createEl, scrollIntoViewIfNeeded } from '../utils/dom-utils';
 import { LnCol2TopLeft } from './converter';
 import { renderSelectionRects } from './selection';
-import { SELECTOR, RESERVED_WORDS, EXTRA_TYPES } from '../global/constants';
+import { SELECTOR } from '../global/constants';
 import { editorState } from '../global/state';
+import { StringStream } from '../model/string-stream';
+import { state } from '../parser/javascript';
 
 export class Render {
 
@@ -38,7 +40,7 @@ export class Render {
   }
 
   private renderLinesContent(editor: Editor): void {
-    const content: string[] = editor.getLines().content.map(str => this.decorateLine(str));
+    const content: string[] = this.decorateLines(editor.getLines().content);
     let i = 0;
     while (i < content.length) {
       const line = content[i];
@@ -61,9 +63,20 @@ export class Render {
     }
   }
 
-  private decorateLine(str: string): string {
-    RESERVED_WORDS.forEach(v => str = str.replace(new RegExp(`${v} `, 'g'), `<span class='keyword'>${v}</span> `));
-    EXTRA_TYPES.forEach(v => str = str.replace(new RegExp(`${v}`, 'g'), `<span class='type'>${v}</span>`));
-    return str;
+  private decorateLines(lines: string[]): string[] {
+    const dlines = Array(lines.length).fill('');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const ss = new StringStream(line);
+      while (!ss.end()) {
+        while (!ss.end() && ss.peek() == ' ') {
+          ss.next();
+        }
+        dlines[i] += ss.current();
+        const [style, tk] = state.f(ss, state);
+        dlines[i] += `<span class=${style}>${tk}</span>`;
+      }
+    }
+    return dlines;
   }
 }
