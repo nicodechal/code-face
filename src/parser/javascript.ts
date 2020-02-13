@@ -69,6 +69,11 @@ function parseToken(s: StringStream, state: State): [string, string] {
       s.next();
       state.f = parseComment;
       return state.f(s, state);
+    } else if (!/[+\-*&%=<>!?|]/.test(s.peek())) {
+      while (!s.end() && (ch = s.peek()) != '/') s.next();
+      s.next();
+      while (!s.end() && /[gimy]/.test(ch = s.peek())) s.next();
+      return ['reg', s.current()];
     } else {
       while (!s.end() && /[+\-*&%=<>!?|]/.test(ch = s.peek())) s.next();
       return ['ops', s.current()];
