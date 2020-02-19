@@ -91,7 +91,7 @@ export function findNearestIndex([x, y]: [number, number], list: [number, number
   for (let i = 0; i < list.length; i++) {
     const [l, r] = list[i];
     if (l > x) break;
-    if (Math.abs(list[idx][1] - y) > Math.abs(r - y)) {
+    if (list[idx][0] < l || Math.abs(list[idx][1] - y) > Math.abs(r - y)) {
       idx = i;
     }
   }
