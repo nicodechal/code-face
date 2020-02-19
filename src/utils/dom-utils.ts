@@ -27,7 +27,7 @@ export function getElementHeight(el: HTMLElement): number {
 
 export function scrollIntoViewIfNeeded(el: HTMLElement, conainer: HTMLElement): void {
   const cursorTop = el.offsetTop, scrollTop = conainer.scrollTop;
-  if (cursorTop < scrollTop || cursorTop >= scrollTop + conainer.clientHeight) {
+  if (cursorTop < scrollTop || cursorTop >= scrollTop + conainer.clientHeight - el.clientHeight) {
     el.scrollIntoView();
   }
 }
