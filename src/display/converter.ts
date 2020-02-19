@@ -23,7 +23,7 @@ function LnCol2LineTopLeft(c: string[], lc: LnCol): LineTopLeft {
  */
 export function LnCol2TopLeft(c: string[], lc: LnCol): TopLeft {
   const [ltop, lcol] = LnCol2LineTopLeft(c, lc);
-  const offsetTop = getLineBoxTop(c, lc[0]);
+  const offsetTop = getLineBoxTop(lc[0]);
   return [ltop + offsetTop, lcol];
 }
 

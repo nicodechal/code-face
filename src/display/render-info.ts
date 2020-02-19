@@ -2,8 +2,8 @@ import { linesEl, testEl } from './dom';
 import { createEl } from '../utils/dom-utils';
 
 // TODO: JS-DOC
-export function getLineBoxHeights(c: string[]): number[] {
-  const sz = c.length, list = linesEl.children, lhs = [];
+export function getLineBoxHeights(): number[] {
+  const sz = linesEl.children.length, list = linesEl.children, lhs = [];
   for (let i = 0; i < sz; i++) {
     const rect = list[i].getBoundingClientRect();
     lhs.push(rect.height);
@@ -12,8 +12,8 @@ export function getLineBoxHeights(c: string[]): number[] {
 }
 
 // TODO: JS-DOC
-export function getLineBoxTop(c: string[], ln: number): number {
-  const lhs = getLineBoxHeights(c);
+export function getLineBoxTop(ln: number): number {
+  const lhs = getLineBoxHeights();
   let top = 0;
   for (let i = 0; i < ln - 1; i++) {
     top += lhs[i];
