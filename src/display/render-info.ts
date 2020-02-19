@@ -1,24 +1,25 @@
 import { linesEl, testEl } from './dom';
 import { createEl } from '../utils/dom-utils';
 
-// TODO: JS-DOC
-export function getLineBoxHeights(): number[] {
-  const sz = linesEl.children.length, list = linesEl.children, lhs = [];
-  for (let i = 0; i < sz; i++) {
-    const rect = list[i].getBoundingClientRect();
-    lhs.push(rect.height);
-  }
-  return lhs;
+/**
+ * Get line's display height, if the line number is out of range, return 0.
+ * @param ln line number
+ */
+export function getLineRenderHeight(ln: number): number {
+  if (ln > linesEl.children.length) return 0;
+  return linesEl.children[ln - 1].getBoundingClientRect().height;
 }
 
-// TODO: JS-DOC
+/**
+ * Get top of line `ln` in **linesEl**, it's the distance between 
+ * linesEl's content top edge and line's content top edge.
+ * @param ln line number
+ */
 export function getLineBoxTop(ln: number): number {
-  const lhs = getLineBoxHeights();
-  let top = 0;
-  for (let i = 0; i < ln - 1; i++) {
-    top += lhs[i];
-  }
-  return top;
+  const line = linesEl.children[ln - 1];
+  const linesRect = linesEl.getBoundingClientRect();
+  const lineRect = line.getBoundingClientRect();
+  return lineRect.top - linesRect.top;
 }
 
 /**
