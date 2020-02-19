@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { stringSplice, binarySearch, normalizeLnCol, eqLnCol, cmpLnCol, sortBound, prevLnCol, nextLnCol, generateKey } from '../../src/utils/utils';
+import { stringSplice, binarySearch, normalizeLnCol, eqLnCol, cmpLnCol, sortBound, prevLnCol, nextLnCol, generateKey, findNearestIndex } from '../../src/utils/utils';
 
 describe('test utils', () => {
   it('test stringSplice', () => {
@@ -82,5 +82,12 @@ describe('test utils', () => {
     expect(binarySearch([1,3,4,5,7,8], 2)).equal(1);
     expect(binarySearch([1,3,4,5,7,8], 6)).equal(4);
     expect(binarySearch([1,3,4,5,7,8], 1)).equal(0);
+  })
+
+  it('test findNearestIndex', () => {
+    expect(findNearestIndex([1.4,3], [[1,2],[1,4],[2,1],[2,3]])).equal(0);
+    expect(findNearestIndex([1.9,3.1], [[1,2],[1,4],[2,1],[2,3]])).equal(1);
+    expect(findNearestIndex([2,3], [[1,2],[1,4],[2,1],[2,3]])).equal(3);
+    expect(findNearestIndex([1,100], [[1,2],[1,4],[2,1],[2,3]])).equal(1);
   })
 });

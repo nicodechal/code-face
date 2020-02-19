@@ -78,3 +78,22 @@ export function binarySearch(arr: number[], target: number): number {
   }
   return s;
 }
+
+/**
+ * This function is used to find the nearest position [l, r] in `list`, and:
+ * 1. `l` should be the biggest one that smaller than `x`.
+ * 2. `r` should be the nearest one to `y` in distance.
+ * @param pos   the position we get 
+ * @param list  the list of positions
+ */
+export function findNearestIndex([x, y]: [number, number], list: [number, number][]): number {
+  let idx = 0;
+  for (let i = 0; i < list.length; i++) {
+    const [l, r] = list[i];
+    if (l > x) break;
+    if (Math.abs(list[idx][1] - y) > Math.abs(r - y)) {
+      idx = i;
+    }
+  }
+  return idx;
+}
