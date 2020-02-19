@@ -6,7 +6,7 @@ import { renderSelectionRects } from './selection';
 import { SELECTOR } from '../global/constants';
 import { editorState } from '../global/state';
 import { StringStream } from '../model/string-stream';
-import { state } from '../parser/javascript';
+import { getState } from '../parser/javascript';
 
 export class Render {
 
@@ -65,6 +65,7 @@ export class Render {
 
   private decorateLines(lines: string[]): string[] {
     const dlines = Array(lines.length).fill('');
+    const state = getState();
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       const ss = new StringStream(line);

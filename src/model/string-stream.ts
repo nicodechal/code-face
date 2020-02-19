@@ -13,6 +13,14 @@ export class StringStream {
       return this.str.charAt(this.pos++);
   }
 
+  nextUtil(test: string | RegExp): void {
+    if (typeof test == 'string') {
+      while (!this.end() && this.peek() != test) this.next();
+    } else if (test instanceof RegExp) {
+      while (!this.end() && test.test(this.peek())) this.next();
+    }
+  }
+
   current(): string {
     const ret = this.str.slice(this.start, this.pos);
     this.start = this.pos;

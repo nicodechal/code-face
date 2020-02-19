@@ -41,7 +41,7 @@ function parseComment(s: StringStream, state: State): [string, string] {
 
 function parseToken(s: StringStream, state: State): [string, string] {
   if (s.end()) return ['', ''];
-  let ch = s.next();
+  const ch = s.next();
   if (ch == '\'' || ch == '\"') {
     // String
     state.f = genParseString(ch);
@@ -52,9 +52,7 @@ function parseToken(s: StringStream, state: State): [string, string] {
   } else if (ch == '0' && /[obxOBX]/.test(s.peek())) {
     // Non Decimal
     s.next();
-    while (!s.end() && /[0-9a-fA-F]/.test(ch = s.peek())) {
-      s.next();
-    }
+    s.nextUtil(/[0-9a-fA-F]/);
     return ['number', s.current()];
   } else if (/\d/.test(ch) || (ch == '-' && /\d/.test(s.peek()))) {
     // Float Number
@@ -70,21 +68,20 @@ function parseToken(s: StringStream, state: State): [string, string] {
       state.f = parseComment;
       return state.f(s, state);
     } else if (!/[+\-*&%=<>!?|]/.test(s.peek())) {
-      while (!s.end() && (ch = s.peek()) != '/') s.next();
+      // while (!s.end() && s.peek() != '/') s.next();
+      s.nextUtil('/');
       s.next();
-      while (!s.end() && /[gimy]/.test(ch = s.peek())) s.next();
+      s.nextUtil(/[gimy]/);
       return ['reg', s.current()];
     } else {
-      while (!s.end() && /[+\-*&%=<>!?|]/.test(ch = s.peek())) s.next();
+      s.nextUtil(/[+\-*&%=<>!?|]/);
       return ['ops', s.current()];
     }
   } else if (/[+\-*&%=<>!?|]/.test(ch)) {
-    while (!s.end() && /[+\-*&%=<>!?|]/.test(ch = s.peek())) s.next();
+    s.nextUtil(/[+\-*&%=<>!?|]/);
     return ['ops', s.current()];
   } else {
-    while (!s.end() && /[\w\$_]/.test(ch = s.peek())) {
-      s.next();
-    }
+    s.nextUtil(/[\w\$_]/);
     const word = s.current();
     if (~RESERVED_WORDS.indexOf(word)) {
       return ['keyword', word];
@@ -94,4 +91,10 @@ function parseToken(s: StringStream, state: State): [string, string] {
   }
 }
 
-export const state: State = { f: parseToken };
+// export const state: State = { f: parseToken };
+
+export function getState(): State {
+  return {
+    f: parseToken
+  };
+}
