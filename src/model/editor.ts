@@ -1,16 +1,27 @@
 import '../interface';
 import { Lines } from './lines';
 import { normalizeLnCols, sortBound, eqLnCol } from '../utils/utils';
-import { editorState } from '../global/state';
+
+interface EditorState {
+  contentChanged: boolean; 
+  pasting: boolean; 
+  selecting: boolean;
+}
 
 export class Editor {
   // [start, end] of selection, `end` is the cursor's position.
   private selection: Bound;
   private lines: Lines;
+  state: EditorState;
 
   constructor() {
     this.lines = new Lines();
     this.selection = [[1, 1], [1, 1]];
+    this.state = {
+      contentChanged: true,
+      pasting: false,
+      selecting: false
+    };
   }
 
   add(added: string, selection: Bound = this.selection): LnCol {
@@ -18,7 +29,7 @@ export class Editor {
     if (added == '' && eqLnCol(...selection)) return selection[1]; 
     const p = this.lines.add(added, selection);
     this.selection = [p, p];
-    editorState.contentChanged = true;
+    this.state.contentChanged = true;
     return p;
   }
 
@@ -26,7 +37,7 @@ export class Editor {
     selection = normalizeLnCols(this.lines.content, selection) as Bound;
     const p = this.lines.delete(selection);
     this.selection = [p, p];
-    editorState.contentChanged = true;
+    this.state.contentChanged = true;
     return p;
   }
 
@@ -74,7 +85,7 @@ export class Editor {
     const lc = this.getSelection()[1];
     const nlc = this.moveH(delta);
     this.select(...sortBound([lc, nlc]));
-    editorState.contentChanged = true;
+    this.state.contentChanged = true;
     return this.delete();
   }
 

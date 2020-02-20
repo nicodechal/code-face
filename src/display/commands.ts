@@ -1,12 +1,11 @@
 import { Editor } from '../model/editor';
-import { editorState } from '../global/state';
 
 function selectAll(editor: Editor): void {
   editor.select([1, 1], [Infinity, Infinity]);
 }
 
 function deleteChar(editor: Editor): void {
-  editorState.contentChanged = true;
+  editor.state.contentChanged = true;
   editor.deleteH(-1);
 }
 
@@ -32,5 +31,5 @@ export const keyMap = {
   'Shift+ArrowDown': (editor: Editor): void => selectDown(editor),
   'Shift+ArrowLeft': (editor: Editor): void => selectLeft(editor),
   'Shift+ArrowRight': (editor: Editor): void => selectRight(editor),
-  'Meta+V': (editor: Editor): void => { editorState.pasting = true; }
+  'Meta+V': (editor: Editor): void => { editor.state.pasting = true; }
 };

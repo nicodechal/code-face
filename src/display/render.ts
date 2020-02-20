@@ -4,16 +4,15 @@ import { createEl, scrollIntoViewIfNeeded } from '../utils/dom-utils';
 import { LnCol2TopLeft } from './converter';
 import { renderSelectionRects } from './selection';
 import { SELECTOR } from '../global/constants';
-import { editorState } from '../global/state';
 import { StringStream } from '../model/string-stream';
 import { getState } from '../parser/javascript';
 
 export class Render {
 
   render(editor: Editor): void {
-    if (editorState.contentChanged) {
+    if (editor.state.contentChanged) {
       this.renderLinesContent(editor);
-      editorState.contentChanged = false;
+      editor.state.contentChanged = false;
     }
     this.renderSelection(editor);
   }
