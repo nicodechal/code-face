@@ -28,6 +28,11 @@
   margin-left: 50px;
 }
 
+.lines-box .lines {
+  user-select: none;
+  cursor: text;
+}
+
 .lines-box .lines,
 .lines-box .test-box {
   white-space: pre-wrap;
@@ -47,6 +52,7 @@
   height: 1.2rem;
   width: 1px;
   border: none;
+  resize: none;
 }
 
 .cursor {
@@ -55,6 +61,7 @@
   left: 0;
   width: 1px;
   background-color: #000;
+  cursor: text;
 }
 
 .select-box .select {
