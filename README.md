@@ -6,12 +6,12 @@
     - Line wrapping **[Done]**
 2. Cursor/selection
     - Render cursor/selection **[Done]**
-    - Mouse move/select
-    - Keyboard move/select
-3. Line Numbers
+    - Mouse move/select **[Done]**
+    - Keyboard move/select **[Done]**
+3. Line Numbers **[Done]**
 4. Support different fonts **[Done]**
-5. Shortcut oprations
-6. Highlight
+5. Shortcut oprations **[Done]**
+6. Highlight **[Done]**
 
 # Todos
 
@@ -22,6 +22,7 @@
     - Between IME input, move cursor. **[Done]****[now it's work with cursor not move]**.
     - Delete with IME **[Done]**
 - Emoji support
+- Support Copy & Paste [2020-02-20]
 
 # BUG
 

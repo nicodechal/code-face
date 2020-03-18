@@ -1,5 +1,5 @@
-import { normalizeLnCol } from '../utils/utils';
-import { getLineBoxTop, getAllLineTopLefts } from './render-info';
+import { normalizeLnCol, findNearestIndex } from '../utils/utils';
+import { getLineBoxTop, getAllLineTopLefts, getLineRenderHeight } from './render-info';
 
 /**
  * Get [ln, col]'s corresponding cursor position for cursor rendering
@@ -29,4 +29,21 @@ export function LnCol2TopLeft(c: string[], lc: LnCol): TopLeft {
 
 export function LnCols2TopLefts(c: string[], lcs: LnCol[]): TopLeft[] {
   return lcs.map(v => LnCol2TopLeft(c, v));
+}
+
+export function TopLeft2LnCol(c: string[], [top, left]: TopLeft): LnCol {
+  let curH = 0, ln = 1, hs;
+  while (curH + (hs = getLineRenderHeight(ln)) < top && hs > 0) {
+    curH += hs;
+    ln++;
+  }
+  ln = Math.min(c.length, Math.max(1, ln));
+  const ltl: LineTopLeft = [top - curH, left];
+  const tls = getAllLineTopLefts(c[ln - 1]);
+  const col = findNearestIndex(ltl, tls) + 1;
+  return normalizeLnCol(c, [ln, col]);
+}
+
+export function TopLefts2LnCols(c: string[], tls: TopLeft[]): LnCol[] {
+  return tls.map(v => TopLeft2LnCol(c, v));
 }
